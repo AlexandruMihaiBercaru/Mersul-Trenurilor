@@ -1,4 +1,6 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Mersul trenurilor
+
+Aplicatie a unui operator de transport feroviar (similara cu "Mersul Trenurilor") ce permite atat planificarea rutelor (un traseu intre o statie de plecare si o statie de sosire), cat si cumpararea biletelor in avans, pentru diferite categorii de trenuri.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
