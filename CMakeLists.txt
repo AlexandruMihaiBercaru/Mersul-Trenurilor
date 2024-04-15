@@ -113,7 +113,20 @@ find_package(Threads REQUIRED)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME} main.cpp
-        generated/src/Helper.cpp)
+        generated/src/Helper.cpp
+        sources/Display.cpp
+        headers/Display.h
+        sources/Station.cpp
+        headers/Station.h
+        sources/Train.cpp
+        headers/Train.h
+        sources/Railway.cpp
+        headers/Railway.h
+        sources/Routes.cpp
+        headers/Routes.h
+        sources/RailNetwork.cpp
+        headers/RailNetwork.h
+)
 
 ###############################################################################
 
