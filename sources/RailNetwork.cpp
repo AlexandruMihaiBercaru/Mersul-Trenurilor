@@ -10,13 +10,13 @@ RailNetwork::RailNetwork(int totalStationCount_, const std::vector<Railway> &all
         totalStationCount(totalStationCount_), allRailways(allRailways_),  allStations(allStations_), railConnections(railConnections_), railDistances(railDistances_) { }
 
 void RailNetwork::addConnectionsAndDistances() {
-    for(auto & elem : allRailways) //for each railway of allRailways, repeat the sequence
+    for(auto & elem : allRailways) //for each railway in allRailways, repeat the sequence
     {
         for(int i = 0; i < elem.countStations - 1; i++)
         {
             std::string departureStationName = elem.stationsOnRailway[i].getStationName();
             std::string arrivalStationName = elem.stationsOnRailway[i + 1].getStationName();
-            int departureStationID, arrivalStationID;
+            int departureStationID{0}, arrivalStationID{0};
             for(auto &elem2 : allStations) //for each station in allStations, repeat the following sequence
             {
                 if(elem2.getStationName() == departureStationName)
@@ -35,7 +35,7 @@ void RailNetwork::addConnectionsAndDistances() {
     {
         for(int j = 1; j <= totalStationCount; j++)
             if (railDistances[i][j] == 0 && i != j)
-                railDistances[i][j] = 0x3F3F3F3F; //make static value
+                railDistances[i][j] = 0x3F3F3F3F; //to make: static value
     }
 }
 

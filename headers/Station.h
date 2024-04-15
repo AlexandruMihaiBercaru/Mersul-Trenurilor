@@ -6,18 +6,30 @@
 #define OOP_STATION_H
 
 #include <iostream>
-
+/// \class Station
+///
+/// A class used for memorizing the stations on the main lines of the network. Contains two fields, the station name and its ID.
 class Station {
 private:
+    /// \brief A string referring to the name of a city in which the station is placed
     std::string stationName;
-    int         stationID; //<->a node in the graph
+    /// \brief An ID for each station. When a new station name is read from the input file, a new ID is generated. This ID
+    /// is used for easily memorise the stations in an adjacency matrix and cost matrix, needed to calculate the minimal distances between stations.
+    int stationID;
 public:
-    explicit Station(std::string name_ = "", int code_ = 0);
 
+    /// \brief explicit constructor
+    /// \param name_ the station name
+    /// \param code_  the station code
+    explicit Station(const std::string& name_ , int code_ = 0);
+
+    /// \brief getter for stationName field
     [[nodiscard]] const std::string &getStationName() const;
 
+    /// \brief getter for stationID field
     [[nodiscard]] int getStationID() const;
 
+    /// \brief overloading the output operator
     friend std::ostream &operator<<(std::ostream &out, const Station &myStation);
 };
 

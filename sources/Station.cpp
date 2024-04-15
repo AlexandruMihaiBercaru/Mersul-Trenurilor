@@ -4,7 +4,7 @@
 
 #include "../headers/Station.h"
 
-Station::Station(std::string name_, const int code_) : stationName(std::move(name_)), stationID(code_) {}
+Station::Station(const std::string& name_, const int code_) : stationName(name_), stationID(code_) {}
 
 const std::string &Station::getStationName() const {
     return stationName;

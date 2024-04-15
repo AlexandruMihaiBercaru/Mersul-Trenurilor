@@ -11,17 +11,15 @@
 #include "Station.h"
 
 
-
-//!  \brief Defines the railway objects.
-/*!
-  A railway(or rail line) refers to the physical element of the transport system.
-*/
+/// \Class Railway
+/// A railway (or rail line) refers to the physical infrastructure of the rail network. An object of this type conatins 4 fields
 class Railway {
 private:
     std::vector<Station> stationsOnRailway;
     std::vector<int> distancesBetweenStations;
     /// \brief the ID of the rail line
     int railwayID{0};
+    /// \brief the number of stations built on the rail line
     int countStations{0};
 
 public:
@@ -29,14 +27,9 @@ public:
 
     Railway(const std::vector<Station> &stationOnRailway_, const std::vector<int> &distancesBetweenStations_, int railwayID_, int countStations_);
 
-    //Constructor mai specific?? - pentru citire allRailways din fisier + creare obiecte de tip statie (simultan)
-    Railway(const std::string &oneLine, int &allStationCnt, std::vector<Station> &allStations);
-
     [[nodiscard]] int railwayLength() const;
 
     [[nodiscard]] int getRailwayID() const;
-
-    static std::vector<std::string> split(const std::string& s,  const std::string& delimiter);
 
     friend std::ostream &operator<<(std::ostream &out, const Railway &myRailway);
     friend class RailNetwork;

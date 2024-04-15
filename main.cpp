@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <fstream>
 #include <algorithm>
 
 #include "headers/Station.h"
@@ -10,79 +9,97 @@
 #include "headers/Train.h"
 #include "headers/Routes.h"
 #include "headers/Display.h"
+#include "csv.hpp"
 
-//class Vagon{
+//class Wagon{
 //    -------TO DO---------
-//    std::string confort;
-//    int numarLocuri;
+//
 //};
 
-//class Bilet{
+//class Ticket{
 //   ----------TO DO--------
 //};
 
+using namespace csv;
+
 int main() {
     std::cout << "\n\t----BALKANIK TRANSRAIL----";
-    std::ifstream fin;
-    std::vector<Railway> railways; //salvez obiecte de tip railway, le citesc din fisierul allRailways.in
-    std::vector<Station> stationList; //toate statiile din harta retelei
-    std::vector<std::vector<int> > railConnectionsMatrix(200, std::vector<int>(200, 0)), minimalDistancesMatrix(200,
-                                                                                                                std::vector<int>(
-                                                                                                                        200,
-                                                                                                                        0));
-    std::string file_line;
+
+    std::vector<Railway> railways;
+    std::vector<Station> stationList;
+    std::vector<std::vector<int> > railConnectionsMatrix(200, std::vector<int>(200, 0)), minimalDistancesMatrix(200,std::vector<int>(200,0));
     std::vector<Train> trainList;
-    int totalStationCnt = 0;
+    int allStationCnt = 0;
 
+    CSVFormat format;
+    // Keeping variable-length rows
+    format.variable_columns(VariableColumnPolicy::KEEP);
+    CSVReader railwaysReader("inputs/railway_lines.csv", format);
 
-    fin.open("inputs/magistrale.in");
-    if (!fin) {
-        std::cerr << "Error in opening the file" << std::endl;
-        return 1;
+    /// for each line of the railway_lines file, a new Railway object is created; furthermore,
+    /// the vector containing all the stations in the network gets updated when a new station is found
+    for (CSVRow& row: railwaysReader) { // Iterator for a line of the file
+        std::vector<Station> stationsOnRailway;
+        std::vector<int> distancesOnRailway;
+
+        int railwayIDTemp = row[0].get<int>();
+        int stationCount = row[1].get<int>();
+        for(int index = 2; index < stationCount + 2; index++)
+        {
+            std::string currentStationName = row[index].get<>();
+            bool stationExists = false;
+            /// checking if the station name alraedy exists in the allStations array
+            for (const auto &elem: stationList)
+                if (elem.getStationName() == currentStationName)
+                    stationExists = true;
+            if (!stationExists) ///station has not been already added
+            {
+                allStationCnt++;
+                int stationIDTemp = allStationCnt;
+                Station stationTemp(currentStationName, stationIDTemp);
+                stationList.push_back(stationTemp);
+                stationsOnRailway.push_back(stationTemp);
+            }
+            else //the station already exists in allStations, therefore I need to get the Station object in order to add it to the stationsOnRailway vector
+            {
+                int stationIDTemp{0};
+                for (auto &elem: stationList) //elem = o statie
+                    if (elem.getStationName() == currentStationName)
+                        stationIDTemp = elem.getStationID();
+                Station stationTemp(currentStationName, stationIDTemp);
+                stationsOnRailway.push_back(stationTemp);
+            }
+        }
+        for(int index = 2 + stationCount; index < 2 * stationCount + 1; index++)
+            distancesOnRailway.push_back(row[index].get<int>());
+        Railway railwayTemp(stationsOnRailway, distancesOnRailway, railwayIDTemp, stationCount);
+        railways.push_back(railwayTemp);
     }
-    while (getline(fin, file_line)) {
-        Railway tempRailway(file_line, totalStationCnt, stationList);
-        railways.push_back(tempRailway);
-    }
-    fin.close();
-    //am terminat cu fisierul allRailways.in. Acum, in vectorul 'railways' am magistralele
 
-    RailNetwork railwayMap(totalStationCnt, railways, stationList, railConnectionsMatrix, minimalDistancesMatrix);
+    RailNetwork railwayMap(allStationCnt, railways, stationList, railConnectionsMatrix, minimalDistancesMatrix);
     railwayMap.addConnectionsAndDistances();
     railwayMap.updateConnectionsCalculateDistances();
 
-    fin.open("inputs/trenuri.in");
-    if (!fin) {
-        std::cerr << "Error in opening the file" << std::endl;
-        return 1;
-    }
-    while (getline(fin, file_line)) {
-        std::string tempStop;
-        Railway crtRailway;
+    CSVReader trainsReader("inputs/trains.csv", format);
+    for (CSVRow& row: trainsReader) {
+        Railway currentRailway;
         std::vector<Station> stopsList;
-        std::vector<std::string> line = Railway::split(file_line, ", ");
-        int trainIDTemp = std::stoi(line[0]);
-        std::string trainTypeTemp = line[1];
-        int railwayIDTemp = std::stoi(line[2]);
-        auto it = std::find_if(railways.begin(), railways.end(), [railwayIDTemp](const Railway &railway) {
-            return
-                    railway.getRailwayID() == railwayIDTemp;
-        });
+        int trainTempID = row[0].get<int>();
+        std::string trainTypeTemp = row[1].get<>();
+        int railwayIDTemp = row[2].get<int>();
+        auto it = std::find_if(railways.begin(), railways.end(), [railwayIDTemp](const Railway &railway) {return railway.getRailwayID() == railwayIDTemp;});
         if (it != railways.end())
-            crtRailway = *it;
-        for (int i = 3; i < int(line.size()); i++) {
-            tempStop = line[i];
-            auto it2 = std::find_if(stationList.begin(), stationList.end(), [&tempStop](const Station &obj) {
-                return
-                        obj.getStationName() == tempStop;
-            });
+            currentRailway = *it;
+        for (int index = 3; index < int(row.size()); index++) {
+            std::string currentStop = row[index].get<>();
+            auto it2 = std::find_if(stationList.begin(), stationList.end(),[&currentStop](const Station &obj) { return obj.getStationName() == currentStop; });
             if (it2 != stationList.end())
                 stopsList.push_back(*it2);
         }
-        Train trainTemp(trainIDTemp, trainTypeTemp, crtRailway, stopsList);
+        Train trainTemp(trainTempID, trainTypeTemp, currentRailway, stopsList);
         trainList.push_back(trainTemp);
     }
-    fin.close();
+
     Routes myTrainNetwork(trainList);
 
     while (true) {

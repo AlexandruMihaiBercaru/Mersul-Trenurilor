@@ -5,7 +5,6 @@
 #ifndef OOP_TRAIN_H
 #define OOP_TRAIN_H
 
-
 #include <iostream>
 #include "Railway.h"
 

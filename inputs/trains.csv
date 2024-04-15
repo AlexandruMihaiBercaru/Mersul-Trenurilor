@@ -1,0 +1,10 @@
+train ID,train type,railway ID,stops list
+1200,B,2,Ankara,Istanbul,Bucharest
+1300,A,2,Istanbul,Belgrade
+1600,A,2,Sarajevo,Craiova,Bucharest,Istanbul
+1201,C,1,Izmir,Athens,Tirana,Skopje,Sofia,Varna,Constanta
+1202,C,1,Varna,Constanta,Odessa,Chisinau,Kiev
+1111,A,4,Cluj Napoca,Brasov
+2001,B,5,Rome,Vienna,Warsaw,Minsk,Kiev
+3001,A,3,Berlin,Dresden,Prague,Vienna,Belgrade
+3101,C,3,Berlin,Kiel

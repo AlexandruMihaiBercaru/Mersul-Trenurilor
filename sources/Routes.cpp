@@ -18,8 +18,6 @@ void Routes::arrivals(std::string &stationName) {
             exists = true;
             std::cout << currentTrain.getTrainID() << " coming from: ";
             auto index = std::distance(currentTrain.getStops().begin(), it);
-            for (int i = 0; i < index - 1; i++)
-                std::cout << currentTrain.getStops()[i].getStationName() << " - ";
             std::cout << currentTrain.getStops()[index - 1].getStationName() << "\n";
         }
     }
@@ -37,9 +35,6 @@ void Routes::departures(std::string &stationName) {
         {
             exists = true;
             std::cout << currentTrain.getTrainID() << " going to: ";
-            int index = int(std::distance(currentTrain.getStops().begin(), it));
-            for (int i = index + 1; i < stopsCount - 1; i++)
-                std::cout << currentTrain.getStops()[i].getStationName() << " - ";
             std::cout << currentTrain.getStops()[stopsCount - 1].getStationName() << "\n";
         }
     }

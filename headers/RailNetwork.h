@@ -15,7 +15,6 @@ private:
     int totalStationCount;
     std::vector<Railway> allRailways;
     std::vector<Station> allStations;
-    /// \brief
     std::vector< std::vector<int> > railConnections, railDistances;
 public:
     RailNetwork(int totalStationCount_, const std::vector<Railway> &allRailways_, const std::vector<Station> &allStations_, std::vector< std::vector<int> >&railConnections_, std::vector< std::vector<int> >&railDistances_);

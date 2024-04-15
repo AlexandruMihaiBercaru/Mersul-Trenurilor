@@ -6,7 +6,7 @@
 
 void Display::printMenu() {
     std::cout << "\t\t\t\n\nChoose an option:\n\n";
-    std::cout << "\t1. Print info about the rail network (the railways and minimal rail distances between stations)\n";
+    std::cout << "\t1. Print info about the rail network (the lines and the minimal distances on rail between stations)\n";
     std::cout << "\t2. Arrivals to a given station\n";
     std::cout << "\t3. Departures from a given station\n";
     std::cout << "\n\n\t [Press 'Exit' to leave.]\n";
