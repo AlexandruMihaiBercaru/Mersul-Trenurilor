@@ -1,9 +1,9 @@
 1
-Belgrad
+Belgrade
 2
 Istanbul
 1600
 3
-Viena
+Vienna
 2001
 Exit

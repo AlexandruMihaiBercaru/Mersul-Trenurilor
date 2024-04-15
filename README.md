@@ -1,4 +1,3 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
 
 ## Mersul Trenurilor
 Descrierea temei: Sa presupunem ca ar exista o retea feroviara la nivel european, pe care ar opera trenuri de mare viteza.
@@ -6,18 +5,6 @@ Aplicatia (similara cu) "Mersul Trenurilor" permite utilizatorilor sa afle detal
 dintre localitati, trenurile care sosesc si pleaca dintr-o anume statie, informatii despre aceste trenuri (statiile in care opresc,
 distanta parcursa, [ora de plecare]). Mai mult, utilizatorii isi pot planifica propriul traseu si isi pot cumpara un bilet pentru ruta
 planificata, afland si pretul si durata calatoriei.
-
-### Important!
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
-
-O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
-
-### Cerințe modele de limbaj la nivel de semestru
-- [ ] minim o funcționalitate majoritar doar cu LLM
-- [ ] minim 2-3 funcționalități ~50% voi, ~50% LLM-ul
-- [ ] minim 2-3 funcționalități suficient de complicate pe care un LLM nu le poate implementa
 
 
 ## Tema 1
@@ -71,6 +58,19 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
 - [ ] tag de `git`: de exemplu `v0.3` sau `v1.0`
+
+### Important!
+Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
+Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
+în care oferă funcționalități ajutătoare și doar dacă are sens.
+
+O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
+
+### Cerințe modele de limbaj la nivel de semestru
+- [ ] minim o funcționalitate majoritar doar cu LLM
+- [ ] minim 2-3 funcționalități ~50% voi, ~50% LLM-ul
+- [ ] minim 2-3 funcționalități suficient de complicate pe care un LLM nu le poate implementa
+
 
 ## Resurse
 
