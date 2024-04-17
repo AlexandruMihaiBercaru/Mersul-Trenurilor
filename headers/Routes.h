@@ -7,18 +7,31 @@
 
 #include <iostream>
 #include "Train.h"
+#include "RailNetwork.h"
 
-class Routes {
+class Routes : public Network{
     std::vector<Train> allTrains;
-    //to add: trainConnectionsMatrix + distances by trains
 public:
-    explicit Routes(const std::vector<Train> &allTrains_);
+
+    Routes() = default;
+
+
+
+    [[maybe_unused]] explicit Routes(std::vector<std::vector<int>> &railConnectionsMatrix_, std::vector<std::vector<int>> &raildistancesMatrix, const std::vector<Train> &allTrains_);
+
+    void buildTrainConnectionsDistances(RailNetwork& myAlreadyBuiltRailMap);
+
+    void parseTrainsCSV(RailNetwork& myAlreadyBuiltRailMap);
 
     void arrivals(std::string &stationName);
 
     void departures(std::string &stationName);
 
     [[nodiscard]] const std::vector<Train> &getAllTrains() const;
+
+    void reconstructPath(int Start, int Stop, RailNetwork& myAlreadyBuiltRailMap, std::vector<int>&path);
+
+    [[nodiscard]] const std::vector<std::vector<int>> &getRailDistancesMatrix() const;
 };
 
 #endif //OOP_ROUTES_H

@@ -8,16 +8,24 @@
 #include <iostream>
 #include <vector>
 #include "Railway.h"
+#include "Network.h"
 
 
-class RailNetwork {
+class RailNetwork : public Network{
 private:
-    int totalStationCount;
+
+    int totalStationCount{0};
     std::vector<Railway> allRailways;
     std::vector<Station> allStations;
-    std::vector< std::vector<int> > railConnections, railDistances;
 public:
-    RailNetwork(int totalStationCount_, const std::vector<Railway> &allRailways_, const std::vector<Station> &allStations_, std::vector< std::vector<int> >&railConnections_, std::vector< std::vector<int> >&railDistances_);
+
+    RailNetwork()=default;
+
+
+
+    RailNetwork(std::vector< std::vector<int> >&connectionsMatrix_, std::vector< std::vector<int> >&distancesMatrix_, const std::vector<Railway> &allRailways_, const std::vector<Station> &allStations_);
+
+    void parseRailsCSV();
 
     void addConnectionsAndDistances();
 
@@ -26,6 +34,13 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const RailNetwork &myMap);
 
     void printDistancesFromStation(const std::string &myStationName);
+
+    [[nodiscard]] const std::vector<Railway> &getAllRailways() const;
+
+    [[nodiscard]] const std::vector<Station> &getAllStations() const;
+
+    friend class Routes;
+
 };
 
 

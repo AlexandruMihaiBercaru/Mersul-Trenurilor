@@ -20,7 +20,7 @@ int Railway::getRailwayID() const {
 }
 
 std::ostream &operator<<(std::ostream &out, const Railway &myRailway) {
-    out << "\nLINE " << myRailway.railwayID << ": \nLENGTH: " << myRailway.railwayLength() << " km; \nSTATIONS: ";
+    out << "\n\tLINE " << myRailway.railwayID << ": \n\tLENGTH: " << myRailway.railwayLength() << " km; \n\tSTATIONS: ";
     for (int i = 0; i < myRailway.countStations - 1; i++)
         out << myRailway.stationsOnRailway[i].getStationName() << " - ";
     out << myRailway.stationsOnRailway[myRailway.countStations - 1].getStationName() << "\n";

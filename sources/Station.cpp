@@ -4,7 +4,9 @@
 
 #include "../headers/Station.h"
 
-Station::Station(const std::string& name_, const int code_) : stationName(name_), stationID(code_) {}
+
+
+Station::Station(const std::string& name_) : stationName(name_), stationID(staticID) { ++staticID;}
 
 const std::string &Station::getStationName() const {
     return stationName;
@@ -18,3 +20,14 @@ std::ostream &operator<<(std::ostream &out, const Station &myStation) {
     out << myStation.stationName;
     return out;
 }
+
+int Station::staticID = 1;
+
+Station& Station::operator=(const Station &other) {
+    this->stationName = other.stationName;
+    return *this;
+}
+
+
+
+//Station::Station(const Station &other) : stationName(other.stationName), stationID(other.stationID) {}

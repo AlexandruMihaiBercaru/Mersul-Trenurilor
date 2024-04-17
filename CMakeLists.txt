@@ -126,6 +126,10 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/Routes.h
         sources/RailNetwork.cpp
         headers/RailNetwork.h
+        sources/App.cpp
+        headers/App.h
+        sources/Network.cpp
+        headers/Network.h
 )
 
 ###############################################################################

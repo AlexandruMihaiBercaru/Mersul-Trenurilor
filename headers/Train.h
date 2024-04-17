@@ -5,10 +5,10 @@
 #ifndef OOP_TRAIN_H
 #define OOP_TRAIN_H
 
-#include <iostream>
 #include "Railway.h"
 
 class Train {
+private:
     int TrainID;
     std::string trainType;
     Railway railway;
@@ -26,6 +26,8 @@ public:
     [[nodiscard]] const std::vector<Station> &getStops() const;
 
     [[nodiscard]] int getTrainID() const;
+
+
 
     ~Train() = default;
 };

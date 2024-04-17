@@ -13,10 +13,12 @@
 
 class Display {
 public:
+    static void initialMessage();
     static void printMenu();
-    static void printNetworkInfos(const std::vector<Railway> &railNetwork, RailNetwork &railMap);
+    static void printNetworkInfos(RailNetwork &railMap);
     static void printArrivals(Routes &myRoutes);
     static void printDepartures(Routes &myRoutes);
+    static void printRoute(Routes &myRoutes, RailNetwork &railMap);
 };
 
 
