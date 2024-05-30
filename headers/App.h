@@ -6,10 +6,11 @@
 #define OOP_APP_H
 
 #include "Display.h"
+#include "MenuOptionException.h"
 #include <vector>
+#include <memory>
 
 class App {
-
 public:
     static void startApp();
 

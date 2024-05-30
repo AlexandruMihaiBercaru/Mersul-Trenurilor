@@ -8,6 +8,8 @@
 #include <iostream>
 #include "Routes.h"
 #include "RailNetwork.h"
+#include "Traveller.h"
+#include "TicketFactory.h"
 #include <vector>
 
 
@@ -19,6 +21,8 @@ public:
     static void printArrivals(Routes &myRoutes);
     static void printDepartures(Routes &myRoutes);
     static void printRoute(Routes &myRoutes, RailNetwork &railMap);
+    static void buyTicket(Routes &myRoutes, RailNetwork &railMap, Traveller &user);
+    static void findStationsFromInput(Station &start, Station &stop, Routes &myRoutes);
 };
 
 

@@ -25,9 +25,8 @@ int Station::staticID = 1;
 
 Station& Station::operator=(const Station &other) {
     this->stationName = other.stationName;
+    this->stationID = other.stationID;
     return *this;
 }
 
 
-
-//Station::Station(const Station &other) : stationName(other.stationName), stationID(other.stationID) {}

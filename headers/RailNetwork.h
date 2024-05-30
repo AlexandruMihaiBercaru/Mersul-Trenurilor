@@ -6,10 +6,12 @@
 #define OOP_RAILNETWORK_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "Railway.h"
 #include "Network.h"
-
+#include "UnknownFileException.h"
+#include "NoStationException.h"
 
 class RailNetwork : public Network{
 private:

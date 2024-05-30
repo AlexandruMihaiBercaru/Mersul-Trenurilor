@@ -43,7 +43,6 @@ public:
     /// \brief assigment operator
     Station& operator=(const Station& other);
 
-
 };
 
 #endif //OOP_STATION_H

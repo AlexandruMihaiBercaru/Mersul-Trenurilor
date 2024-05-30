@@ -17,48 +17,62 @@ void RailNetwork::parseRailsCSV() {
     CSVFormat format;
     // Keeping variable-length rows
     format.variable_columns(VariableColumnPolicy::KEEP);
-    CSVReader railwaysReader("inputs/railway_lines.csv", format);
-    /// for each line of the railway_lines file, a new Railway object is created;
-    /// the vector containing all the stations in the network gets updated when a new station is found
-    for (CSVRow& row: railwaysReader) { // Iterator for a line of the file
-        std::vector<Station> stationsOnRailway;
-        std::vector<int> distancesOnRailway;
-        int railwayIDTemp = row[0].get<int>();
-        int stationCount = row[1].get<int>();
-        for(int index = 2; index < stationCount + 2; index++)
-        {
-            Station *foundStation;
-            std::string currentStationName = row[index].get<>();
-            bool exists = false;
-            for (auto & station: allStations)
+    try{
+        /// first, check if the file exists...!
+        std::string filePath = "inputs/railway_lines.csv";
+        std::ifstream file;
+        file.open(filePath);
+        if(!file){
+            throw UnknownFileException("Error occured", 0);
+        }
+        file.close();
+        CSVReader railwaysReader(filePath, format);
+        /// for each line of the railway_lines file, a new Railway object is created;
+        /// the vector containing all the stations in the network gets updated when a new station is found
+        for (CSVRow& row: railwaysReader) { // Iterator for a line of the file
+            std::vector<Station> stationsOnRailway;
+            std::vector<int> distancesOnRailway;
+            int railwayIDTemp = row[0].get<int>();
+            int stationCount = row[1].get<int>();
+            for(int index = 2; index < stationCount + 2; index++)
             {
-                if (station.getStationName() == currentStationName)
+                Station *foundStation;
+                std::string currentStationName = row[index].get<>();
+                bool exists = false;
+                for (auto & station: allStations)
                 {
-                    exists = true;
-                    foundStation = &station;
-                    break;
+                    if (station.getStationName() == currentStationName)
+                    {
+                        exists = true;
+                        foundStation = &station;
+                        break;
+                    }
+                }
+                if (exists)
+                {
+                    //the station already exists in allStations
+                    Station currentStation;
+                    currentStation = *foundStation;
+                    stationsOnRailway.emplace_back(currentStation);
+                }
+                else ///station has not been added yet
+                {
+                    Station stationTemp(currentStationName); /// a new object has been created, staticId increments by 1
+                    allStations.emplace_back(stationTemp);
+                    stationsOnRailway.emplace_back(stationTemp);
                 }
             }
-            if (exists)
-            {
-                //the station already exists in allStations
-                Station currentStation;
-                currentStation = *foundStation;
-                stationsOnRailway.emplace_back(currentStation);
-            }
-            else ///station has not been added yet
-            {
-                Station stationTemp(currentStationName); /// a new object has been created, staticId increments by 1
-                allStations.emplace_back(stationTemp);
-                stationsOnRailway.emplace_back(stationTemp);
-            }
+            for(int index = 2 + stationCount; index < 2 * stationCount + 1; index++)
+                distancesOnRailway.emplace_back(row[index].get<int>());
+            Railway railwayTemp(stationsOnRailway, distancesOnRailway, railwayIDTemp, stationCount);
+            allRailways.emplace_back(railwayTemp);
         }
-        for(int index = 2 + stationCount; index < 2 * stationCount + 1; index++)
-            distancesOnRailway.emplace_back(row[index].get<int>());
-        Railway railwayTemp(stationsOnRailway, distancesOnRailway, railwayIDTemp, stationCount);
-        allRailways.emplace_back(railwayTemp);
+        this->totalStationCount = int(allStations.size());
     }
-    this->totalStationCount = int(allStations.size());
+    catch(const UnknownFileException &e){
+        std::cerr << "ERROR: " << e.what() << std::endl;
+        return;
+    }
 }
 
 
@@ -147,6 +161,8 @@ const std::vector<Railway> &RailNetwork::getAllRailways() const {
 const std::vector<Station> &RailNetwork::getAllStations() const {
     return allStations;
 }
+
+
 
 
 

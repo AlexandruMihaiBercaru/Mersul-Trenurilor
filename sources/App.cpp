@@ -13,43 +13,78 @@ void App::startApp() {
     std::vector<Railway> myRailways;
     std::vector<Train> myTrains;
 
-
+    std::shared_ptr<Traveller> myUser = std::make_shared<Traveller>();
     Display::initialMessage();
+
     Network *tempMap = new RailNetwork(connections1, distances1, myRailways, myStations);
-    RailNetwork *myRailMap = dynamic_cast<RailNetwork*>(tempMap);
+    auto *myRailMap = dynamic_cast<RailNetwork*>(tempMap);
 
     if (myRailMap != nullptr)
     {
         myRailMap->parseRailsCSV();
         myRailMap->addConnectionsAndDistances();
         myRailMap->updateConnectionsCalculateDistances();
-        Network *tempTrainMap = new Routes(connections2, distances2, myTrains);
-        Routes *myTrainMap = dynamic_cast<Routes*>(tempTrainMap);
+
+        std::shared_ptr<Network> tempTrainMap2;
+        tempTrainMap2 = std::make_shared<Routes>(connections2, distances2, myTrains);
+
+        std::shared_ptr<Routes> myTrainMap;
+        myTrainMap = std::dynamic_pointer_cast<Routes>(tempTrainMap2);
+
         if (myTrainMap != nullptr)
         {
             myTrainMap->parseTrainsCSV(*myRailMap);
             myTrainMap->buildTrainConnectionsDistances(*myRailMap);
+            const std::vector<std::string> options{"Exit", "1", "2", "3", "4", "5"};
 
-            while (true) {
-                std::string keyboardInput;
-                const std::string options[5] = {"Exit", "1", "2", "3", "4"};
-                Display::printMenu();
-                getline(std::cin, keyboardInput);
-                if (keyboardInput == options[0])
-                    break;
-                else if (keyboardInput == options[1])
-                    Display::printNetworkInfos(*myRailMap);
-                else if (keyboardInput == options[2])
-                    Display::printArrivals(*myTrainMap);
-                else if (keyboardInput == options[3])
-                    Display::printDepartures(*myTrainMap);
-                else if(keyboardInput == options[4])
-                    Display::printRoute(*myTrainMap, *myRailMap);
-                else {
-                    std::cout << "Wrong input... try again:" << std::endl;
+            while(true) {
+                bool gaveInput = false;
+
+                while (!gaveInput) {
+                    Display::printMenu();
+                    std::string keyboardInput;
+                    getline(std::cin, keyboardInput);
+                    gaveInput = true;
+                    try {
+                        auto iterator = std::find(options.begin(), options.end(), keyboardInput);
+                        if (iterator == options.end())
+                            throw MenuOptionException(keyboardInput);
+                        auto index = std::distance(options.begin(), iterator);
+                        switch (index) {
+                            case 0: {
+                                return;
+                               // break;
+                            }
+                            case 1: {
+                                Display::printNetworkInfos(*myRailMap);
+                                break;
+                            }
+                            case 2: {
+                                Display::printArrivals(*myTrainMap);
+                                break;
+                            }
+                            case 3: {
+                                Display::printDepartures(*myTrainMap);
+                                break;
+                            }
+                            case 4: {
+                                Display::printRoute(*myTrainMap, *myRailMap);
+                                break;
+                            }
+                            case 5 : {
+                                Display::buyTicket(*myTrainMap, *myRailMap, *myUser);
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    }
+                    catch (MenuOptionException &e) {
+                        std::cerr << "Error! " << e.what() << std::endl;
+                        gaveInput = false; //re-enters while-loop
+                    }
                 }
             }
-            delete myTrainMap;
         }
         else{
             std::cout << "Second Cast failed" << "\n";

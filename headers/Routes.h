@@ -32,6 +32,10 @@ public:
     void reconstructPath(int Start, int Stop, RailNetwork& myAlreadyBuiltRailMap, std::vector<int>&path);
 
     [[nodiscard]] const std::vector<std::vector<int>> &getRailDistancesMatrix() const;
+
+    Station findStation(const std::string& city);
+
+
 };
 
 #endif //OOP_ROUTES_H

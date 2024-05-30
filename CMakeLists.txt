@@ -130,6 +130,20 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/App.h
         sources/Network.cpp
         headers/Network.h
+        headers/MenuOptionException.h
+        headers/UnknownFileException.h
+        headers/NoStationException.h
+        sources/Ticket.cpp
+        headers/Ticket.h
+        sources/Traveller.cpp
+        headers/Traveller.h
+        sources/StudentTicket.cpp
+        headers/StudentTicket.h
+        sources/RetireeTicket.cpp
+        headers/RetireeTicket.h
+        sources/TicketFactory.cpp
+        headers/TicketFactory.h
+        sources/Ticket.cpp
 )
 
 ###############################################################################

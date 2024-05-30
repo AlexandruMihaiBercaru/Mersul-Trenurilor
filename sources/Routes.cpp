@@ -14,26 +14,39 @@ void Routes::parseTrainsCSV(RailNetwork& myAlreadyBuiltRailMap) {
     CSVFormat format;
     // Keeping variable-length rows
     format.variable_columns(VariableColumnPolicy::KEEP);
-    CSVReader trainsReader("inputs/trains.csv", format);
-    for (CSVRow& row: trainsReader) {
-        Railway currentRailway;
-        std::vector<Station> stopsList;
-        int trainTempID = row[0].get<int>();
-        std::string trainTypeTemp = row[1].get<>();
-        int railwayIDTemp = row[2].get<int>();
-        auto it = std::find_if(myAlreadyBuiltRailMap.allRailways.begin(), myAlreadyBuiltRailMap.allRailways.end(), [railwayIDTemp](const Railway &railway) {return railway.getRailwayID() == railwayIDTemp;});
-        if (it != myAlreadyBuiltRailMap.allRailways.end())
-            currentRailway = *it;
-        for (int index = 3; index < int(row.size()); index++) {
-            std::string currentStop = row[index].get<>();
-            auto it2 = std::find_if(myAlreadyBuiltRailMap.allStations.begin(),
-                                    myAlreadyBuiltRailMap.allStations.end(), [&currentStop](const Station &obj)
-                                    { return obj.getStationName() == currentStop; });
-            if (it2 != myAlreadyBuiltRailMap.allStations.end())
-                stopsList.push_back(*it2);
+    try{
+        std::string filePath = "inputs/trains.csv";
+        std::ifstream file;
+        file.open(filePath);
+        if(!file){
+            throw UnknownFileException("Error occured", 1);
         }
-        Train trainTemp(trainTempID, trainTypeTemp, currentRailway, stopsList);
-        allTrains.push_back(trainTemp);
+        file.close();
+        CSVReader trainsReader(filePath, format);
+        for (CSVRow& row: trainsReader) {
+            Railway currentRailway;
+            std::vector<Station> stopsList;
+            int trainTempID = row[0].get<int>();
+            std::string trainTypeTemp = row[1].get<>();
+            int railwayIDTemp = row[2].get<int>();
+            auto it = std::find_if(myAlreadyBuiltRailMap.allRailways.begin(), myAlreadyBuiltRailMap.allRailways.end(), [railwayIDTemp](const Railway &railway) {return railway.getRailwayID() == railwayIDTemp;});
+            if (it != myAlreadyBuiltRailMap.allRailways.end())
+                currentRailway = *it;
+            for (int index = 3; index < int(row.size()); index++) {
+                std::string currentStop = row[index].get<>();
+                auto it2 = std::find_if(myAlreadyBuiltRailMap.allStations.begin(),
+                                        myAlreadyBuiltRailMap.allStations.end(), [&currentStop](const Station &obj)
+                                        { return obj.getStationName() == currentStop; });
+                if (it2 != myAlreadyBuiltRailMap.allStations.end())
+                    stopsList.push_back(*it2);
+            }
+            Train trainTemp(trainTempID, trainTypeTemp, currentRailway, stopsList);
+            allTrains.push_back(trainTemp);
+        }
+    }
+    catch(const UnknownFileException &e){
+        std::cerr << "ERROR: " << e.what() << std::endl;
+        return;
     }
 }
 
@@ -136,7 +149,6 @@ void Routes::reconstructPath(int Start, int Stop, RailNetwork &myAlreadyBuiltRai
                 reconstructPath(Start, currentID, myAlreadyBuiltRailMap, path);
                 reconstructPath(currentID, Stop, myAlreadyBuiltRailMap, path);
                 found = true;
-
         }
         currentID++;
     }
@@ -149,7 +161,22 @@ const std::vector<std::vector<int>> &Routes::getRailDistancesMatrix() const {
 }
 
 
-
+Station Routes::findStation(const std::string &city) {
+    try
+    {
+        for(auto &currentTr: allTrains){
+            for(auto &currentStop: currentTr.getStops())
+                if(currentStop.getStationName() == city){
+                    return currentStop;
+                }
+        }
+        throw NoStationException();
+    }
+    catch(NoStationException &e){
+        std::cerr << "\nERROR: " << e.what() << "\n";
+        return Station("");
+    }
+}
 
 
 
