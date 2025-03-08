@@ -1,11 +1,14 @@
 
 ## Mersul Trenurilor
-Descrierea temei: Sa presupunem ca ar exista o retea feroviara la nivel european, pe care ar opera trenuri de mare viteza.
-Aplicatia (similara cu) "Mersul Trenurilor" permite utilizatorilor sa afle detalii despre aceasta retea de transport, precum distantele
-dintre localitati, trenurile care sosesc si pleaca dintr-o anume statie, informatii despre aceste trenuri (statiile in care opresc,
-distanta parcursa, [ora de plecare]). Mai mult, utilizatorii isi pot planifica propriul traseu si isi pot cumpara un bilet pentru ruta
-planificata, afland si pretul si durata calatoriei.
+Imagine a world in which international trains are fast and reliable. 
+This console application provides the users with information about the railway network, such as the
+minimal railroad distances between cities, a timetable of departures and arrivals and detailed information
+about each train passing through a certain station (the stops on the route, the total distance). Moreover, the users can plan
+their own route, and are always provided with the shortest possible path between the endpoints.
 
+#### Some implementation details
+- the rail network and train data have been "provided" using `.csv` files 
+- the shortest paths between tho stations are obtained using the Floyd-Warshall algorithm 
 
 ## Tema 1
 
@@ -29,20 +32,20 @@ planificata, afland si pretul si durata calatoriei.
 
 #### Cerințe
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
+- [x] moșteniri:
   - minim o clasă de bază și **3 clase derivate**
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
-  - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate
-  - [ ] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
+  - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate
+  - [x] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
     - minim o funcție virtuală va fi **specifică temei** (e.g. nu simple citiri/afișări)
     - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
-  - [ ] apelarea constructorului din clasa de bază din constructori din derivate
-  - [ ] smart pointers (recomandat, opțional)
-  - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
+  - [x] apelarea constructorului din clasa de bază din constructori din derivate
+  - [x] smart pointers (recomandat, opțional)
+  - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
 - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
-- [ ] excepții
-  - [ ] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
-  - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
+- [x] excepții
+  - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
+  - [x] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
 - [x] funcții și atribute `static`
 - [x] STL
 - [x] cât mai multe `const`
@@ -53,7 +56,7 @@ planificata, afland si pretul si durata calatoriei.
 ## Tema 3
 
 #### Cerințe
-- [ ] 2 șabloane de proiectare (design patterns)
+- [x] 2 șabloane de proiectare (design patterns)
 - [ ] o clasă șablon cu sens; minim **2 instanțieri**
   - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
